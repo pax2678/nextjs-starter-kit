@@ -5,6 +5,7 @@ This document outlines the next steps for developing your Next.js application.
 ## Phase 1: Essential Setup
 - [ ] Set up environment variables (`.env.local`)
 - [ ] Choose and configure a database
+  - [ ] Convex
   - [ ] PostgreSQL with Prisma
   - [ ] MongoDB with Mongoose
   - [ ] Supabase
