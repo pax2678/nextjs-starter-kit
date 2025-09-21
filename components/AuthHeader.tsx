@@ -15,7 +15,7 @@ export function AuthHeader() {
   // Prevent hydration mismatch by only rendering auth UI after mounting
   if (!mounted || !isLoaded) {
     return (
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="relative z-[100] border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center space-x-2">
             <h1 className="text-xl font-bold">Your App</h1>
@@ -29,7 +29,7 @@ export function AuthHeader() {
   }
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="relative z-[100] border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center space-x-2">
           <h1 className="text-xl font-bold">Your App</h1>
@@ -41,13 +41,9 @@ export function AuthHeader() {
               <span className="text-sm text-muted-foreground">
                 Welcome, {user?.firstName || user?.emailAddresses?.[0]?.emailAddress}!
               </span>
-              <UserButton 
-                appearance={{
-                  elements: {
-                    avatarBox: "h-8 w-8"
-                  }
-                }}
-              />
+              <div className="relative z-[9999]">
+                <UserButton afterSignOutUrl="/" />
+              </div>
             </div>
           ) : (
             <div className="flex items-center space-x-2">
