@@ -6,11 +6,14 @@ export default defineSchema({
     text: v.string(),
     isCompleted: v.boolean(),
     createdAt: v.number(),
-  }),
+    userId: v.optional(v.string()), // Clerk user ID - optional for migration
+  }).index("by_user", ["userId"]),
   
   users: defineTable({
     name: v.string(),
     email: v.string(),
     createdAt: v.number(),
-  }).index("by_email", ["email"]),
+    clerkId: v.string(), // Clerk user ID
+  }).index("by_email", ["email"])
+   .index("by_clerk_id", ["clerkId"]),
 });

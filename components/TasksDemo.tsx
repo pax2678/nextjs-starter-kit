@@ -3,15 +3,34 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
 
 export function TasksDemo() {
-  const tasks = useQuery(api.tasks.get);
+  const { isSignedIn } = useUser();
+  const tasks = useQuery(api.tasks.get, isSignedIn ? {} : "skip");
   const createTask = useMutation(api.tasks.create);
   const toggleTask = useMutation(api.tasks.toggle);
   const removeTask = useMutation(api.tasks.remove);
+  const storeUser = useMutation(api.users.store);
   
   const [newTaskText, setNewTaskText] = useState("");
+
+  // Auto-store user in Convex when they sign in
+  useEffect(() => {
+    if (isSignedIn) {
+      storeUser();
+    }
+  }, [isSignedIn, storeUser]);
+
+  if (!isSignedIn) {
+    return (
+      <div className="max-w-md mx-auto mt-8 p-6 bg-card rounded-lg border text-center">
+        <h2 className="text-2xl font-bold mb-4">Tasks Demo</h2>
+        <p className="text-muted-foreground">Please sign in to manage your tasks.</p>
+      </div>
+    );
+  }
 
   const handleCreateTask = async (e: React.FormEvent) => {
     e.preventDefault();
