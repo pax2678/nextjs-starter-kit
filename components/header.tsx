@@ -96,30 +96,37 @@ export const HeroHeader = () => {
                                 </Authenticated>
                                 
                                 <Unauthenticated>
-                                    <div className="flex flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0">
-                                        <SignInButton mode="modal">
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                className={cn(isScrolled && 'lg:hidden')}>
-                                                Login
-                                            </Button>
-                                        </SignInButton>
-                                        <SignUpButton mode="modal">
-                                            <Button
-                                                size="sm"
-                                                className={cn(isScrolled && 'lg:hidden')}>
-                                                Sign Up
-                                            </Button>
-                                        </SignUpButton>
-                                        <SignInButton mode="modal">
-                                            <Button
-                                                size="sm"
-                                                className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
-                                                Get Started
-                                            </Button>
-                                        </SignInButton>
-                                    </div>
+                                    <SignInButton mode="modal">
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                            size="sm"
+                                            className={cn(isScrolled && 'lg:hidden')}>
+                                            <Link href="#">
+                                                <span>Login</span>
+                                            </Link>
+                                        </Button>
+                                    </SignInButton>
+                                    <SignUpButton mode="modal">
+                                        <Button
+                                            asChild
+                                            size="sm"
+                                            className={cn(isScrolled && 'lg:hidden')}>
+                                            <Link href="#">
+                                                <span>Sign Up</span>
+                                            </Link>
+                                        </Button>
+                                    </SignUpButton>
+                                    <SignInButton mode="modal">
+                                        <Button
+                                            asChild
+                                            size="sm"
+                                            className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
+                                            <Link href="#">
+                                                <span>Get Started</span>
+                                            </Link>
+                                        </Button>
+                                    </SignInButton>
                                 </Unauthenticated>
                             </div>
                         </div>
