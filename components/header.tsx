@@ -117,7 +117,7 @@ export const HeroHeader = () => {
                                             </Link>
                                         </Button>
                                     </SignUpButton>
-                                    <SignInButton mode="modal">
+                                    <SignUpButton mode="modal">
                                         <Button
                                             asChild
                                             size="sm"
@@ -126,7 +126,7 @@ export const HeroHeader = () => {
                                                 <span>Get Started</span>
                                             </Link>
                                         </Button>
-                                    </SignInButton>
+                                    </SignUpButton>
                                 </Unauthenticated>
                             </div>
                         </div>
