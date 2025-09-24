@@ -92,6 +92,14 @@ export const HeroHeader = () => {
                                         <div className="relative z-[9999]">
                                             <UserButton afterSignOutUrl="/" />
                                         </div>
+                                        <Button
+                                            asChild
+                                            size="sm"
+                                            className={cn(isScrolled && 'lg:hidden')}>
+                                            <Link href="/dashboard">
+                                                <span>Dashboard</span>
+                                            </Link>
+                                        </Button>
                                     </div>
                                 </Authenticated>
                                 
