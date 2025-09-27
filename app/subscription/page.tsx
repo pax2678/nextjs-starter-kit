@@ -10,7 +10,8 @@ export default function SubscriptionPage({
 
   const getFeatureDisplayName = (featureName?: string) => {
     if (!featureName) return ''
-    return featureName.replace('_access', '').replace('_', ' ')
+    // Capitalize first letter for display
+    return featureName.charAt(0).toUpperCase() + featureName.slice(1)
   }
 
   const getPlanDisplayName = (planName?: string) => {

@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button'
 export default async function LifecyclePage() {
   const { has } = await auth()
   
-  if (!has({ feature: 'lifecycle_access' })) {
-    redirect('/subscription?feature=lifecycle_access&plan=gold')
+  if (!has({ feature: 'lifecycle' })) {
+    redirect('/subscription?feature=lifecycle&plan=gold')
   }
   
   return (
     <Protect
-      feature="lifecycle_access"
+      feature="lifecycle"
       fallback={
         <div className="flex flex-col items-center justify-center py-16 px-4">
           <div className="text-center max-w-md">
@@ -23,7 +23,7 @@ export default async function LifecyclePage() {
               Track your projects from ideation to deployment with advanced workflow tools.
             </p>
             <Button asChild>
-              <Link href="/subscription?feature=lifecycle_access&plan=gold">
+              <Link href="/subscription?feature=lifecycle&plan=gold">
                 Upgrade to Gold
               </Link>
             </Button>

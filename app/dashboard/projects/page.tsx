@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button'
 export default async function ProjectsPage() {
   const { has } = await auth()
   
-  if (!has({ feature: 'projects_access' })) {
-    redirect('/subscription?feature=projects_access&plan=platinum')
+  if (!has({ feature: 'projects' })) {
+    redirect('/subscription?feature=projects&plan=platinum')
   }
   
   return (
     <Protect
-      feature="projects_access"
+      feature="projects"
       fallback={
         <div className="flex flex-col items-center justify-center py-16 px-4">
           <div className="text-center max-w-md">
@@ -23,7 +23,7 @@ export default async function ProjectsPage() {
               Organize your project portfolio, track progress, and manage complex workflows.
             </p>
             <Button asChild>
-              <Link href="/subscription?feature=projects_access&plan=platinum">
+              <Link href="/subscription?feature=projects&plan=platinum">
                 Upgrade to Platinum
               </Link>
             </Button>

@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button'
 export default async function AnalyticsPage() {
   const { has } = await auth()
   
-  if (!has({ feature: 'analytics_access' })) {
-    redirect('/subscription?feature=analytics_access&plan=gold')
+  if (!has({ feature: 'analytics' })) {
+    redirect('/subscription?feature=analytics&plan=gold')
   }
   
   return (
     <Protect
-      feature="analytics_access"
+      feature="analytics"
       fallback={
         <div className="flex flex-col items-center justify-center py-16 px-4">
           <div className="text-center max-w-md">
@@ -23,7 +23,7 @@ export default async function AnalyticsPage() {
               Get deep insights into your project performance, user engagement, and key metrics.
             </p>
             <Button asChild>
-              <Link href="/subscription?feature=analytics_access&plan=gold">
+              <Link href="/subscription?feature=analytics&plan=gold">
                 Upgrade to Gold
               </Link>
             </Button>

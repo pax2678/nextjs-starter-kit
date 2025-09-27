@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button'
 export default async function TeamPage() {
   const { has } = await auth()
   
-  if (!has({ feature: 'team_access' })) {
-    redirect('/subscription?feature=team_access&plan=platinum')
+  if (!has({ feature: 'team' })) {
+    redirect('/subscription?feature=team&plan=platinum')
   }
   
   return (
     <Protect
-      feature="team_access"
+      feature="team"
       fallback={
         <div className="flex flex-col items-center justify-center py-16 px-4">
           <div className="text-center max-w-md">
@@ -23,7 +23,7 @@ export default async function TeamPage() {
               Manage team members, roles, and track performance across your organization.
             </p>
             <Button asChild>
-              <Link href="/subscription?feature=team_access&plan=platinum">
+              <Link href="/subscription?feature=team&plan=platinum">
                 Upgrade to Platinum
               </Link>
             </Button>
