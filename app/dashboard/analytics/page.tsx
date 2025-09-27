@@ -1,5 +1,8 @@
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+import { Protect } from '@clerk/nextjs'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export default async function AnalyticsPage() {
   const { has } = await auth()
@@ -7,8 +10,28 @@ export default async function AnalyticsPage() {
   if (!has({ feature: 'analytics_access' })) {
     redirect('/subscription?feature=analytics_access&plan=gold')
   }
+  
   return (
-    <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+    <Protect
+      feature="analytics_access"
+      fallback={
+        <div className="flex flex-col items-center justify-center py-16 px-4">
+          <div className="text-center max-w-md">
+            <h2 className="text-2xl font-bold mb-4">Upgrade to Gold Plan</h2>
+            <p className="text-muted-foreground mb-6">
+              Advanced analytics and reporting features are available with the Gold plan. 
+              Get deep insights into your project performance, user engagement, and key metrics.
+            </p>
+            <Button asChild>
+              <Link href="/subscription?feature=analytics_access&plan=gold">
+                Upgrade to Gold
+              </Link>
+            </Button>
+          </div>
+        </div>
+      }
+    >
+        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
       <div className="px-4 lg:px-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold">Analytics</h1>
@@ -74,6 +97,7 @@ export default async function AnalyticsPage() {
           </div>
         </div>
       </div>
-    </div>
-  )
-}
+        </div>
+      </Protect>
+    )
+  }

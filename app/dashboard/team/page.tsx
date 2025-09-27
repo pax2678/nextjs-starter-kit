@@ -1,5 +1,8 @@
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+import { Protect } from '@clerk/nextjs'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export default async function TeamPage() {
   const { has } = await auth()
@@ -7,8 +10,28 @@ export default async function TeamPage() {
   if (!has({ feature: 'team_access' })) {
     redirect('/subscription?feature=team_access&plan=platinum')
   }
+  
   return (
-    <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+    <Protect
+      feature="team_access"
+      fallback={
+        <div className="flex flex-col items-center justify-center py-16 px-4">
+          <div className="text-center max-w-md">
+            <h2 className="text-2xl font-bold mb-4">Upgrade to Platinum Plan</h2>
+            <p className="text-muted-foreground mb-6">
+              Team management and collaboration tools are available with the Platinum plan. 
+              Manage team members, roles, and track performance across your organization.
+            </p>
+            <Button asChild>
+              <Link href="/subscription?feature=team_access&plan=platinum">
+                Upgrade to Platinum
+              </Link>
+            </Button>
+          </div>
+        </div>
+      }
+    >
+        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
       <div className="px-4 lg:px-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold">Team</h1>
@@ -119,6 +142,7 @@ export default async function TeamPage() {
           </div>
         </div>
       </div>
-    </div>
-  )
-}
+        </div>
+      </Protect>
+    )
+  }
