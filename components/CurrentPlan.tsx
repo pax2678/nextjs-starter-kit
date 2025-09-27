@@ -6,11 +6,25 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
 export function CurrentPlan() {
-  const { has } = useAuth()
+  const { has, isLoaded } = useAuth()
+  
+  // Show loading state while auth is being established
+  if (!isLoaded || !has) {
+    return (
+      <div className="flex items-center gap-2">
+        <Badge variant="outline" className="animate-pulse">
+          Loading...
+        </Badge>
+      </div>
+    )
+  }
   
   const getCurrentPlan = () => {
-    if (has({ feature: 'team_access' })) return 'Platinum'
-    if (has({ feature: 'lifecycle_access' })) return 'Gold'  
+    // Additional safety check
+    if (!has) return 'Free'
+    
+    if (has({ plan: 'platinum' })) return 'Platinum'
+    if (has({ plan: 'gold' })) return 'Gold'  
     return 'Free'
   }
   
