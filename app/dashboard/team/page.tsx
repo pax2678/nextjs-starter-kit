@@ -1,4 +1,12 @@
-export default function TeamPage() {
+import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
+
+export default async function TeamPage() {
+  const { has } = await auth()
+  
+  if (!has({ feature: 'team_access' })) {
+    redirect('/subscription?feature=team_access&plan=platinum')
+  }
   return (
     <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
       <div className="px-4 lg:px-6">

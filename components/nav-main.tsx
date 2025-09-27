@@ -3,6 +3,7 @@
 import { IconCirclePlusFilled, IconMail, type Icon } from "@tabler/icons-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Protect } from "@clerk/nextjs"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,6 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { LockedNavItem } from "@/components/LockedNavItem"
 
 export function NavMain({
   items,
@@ -20,6 +22,8 @@ export function NavMain({
     title: string
     url: string
     icon?: Icon
+    requiredFeature?: string
+    requiredPlan?: string
   }[]
 }) {
   const pathname = usePathname()
@@ -49,16 +53,43 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton 
-                asChild 
-                tooltip={item.title}
-                isActive={pathname === item.url}
-              >
-                <Link href={item.url}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                </Link>
-              </SidebarMenuButton>
+              {item.requiredFeature ? (
+                <Protect
+                  feature={item.requiredFeature}
+                  fallback={
+                    <LockedNavItem 
+                      item={{
+                        title: item.title,
+                        icon: item.icon,
+                        requiredFeature: item.requiredFeature,
+                        requiredPlan: item.requiredPlan || 'premium'
+                      }} 
+                    />
+                  }
+                >
+                  <SidebarMenuButton 
+                    asChild 
+                    tooltip={item.title}
+                    isActive={pathname === item.url}
+                  >
+                    <Link href={item.url}>
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </Protect>
+              ) : (
+                <SidebarMenuButton 
+                  asChild 
+                  tooltip={item.title}
+                  isActive={pathname === item.url}
+                >
+                  <Link href={item.url}>
+                    {item.icon && <item.icon />}
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              )}
             </SidebarMenuItem>
           ))}
         </SidebarMenu>

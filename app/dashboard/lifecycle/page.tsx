@@ -1,4 +1,12 @@
-export default function LifecyclePage() {
+import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
+
+export default async function LifecyclePage() {
+  const { has } = await auth()
+  
+  if (!has({ feature: 'lifecycle_access' })) {
+    redirect('/subscription?feature=lifecycle_access&plan=gold')
+  }
   return (
     <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
       <div className="px-4 lg:px-6">
